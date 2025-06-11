@@ -1,75 +1,106 @@
-API Agenda - README
+# 📅 API Agenda
+
 API RESTful para gerenciamento de compromissos com autenticação JWT, controle de usuários e permissões de administrador.
 
-Tecnologias
+---
 
-Node.js + TypeScript
-Express
-Prisma ORM + SQLite
-JWT para autenticação
-bcryptjs para hash de senhas
-Zod para validação de dados
+## 🚀 Tecnologias
 
-Rodando o projeto:
+- **Node.js + TypeScript**
+- **Express**
+- **Prisma ORM + SQLite**
+- **JWT** para autenticação
+- **bcryptjs** para hash de senhas
+- **Zod** para validação de dados
 
-Clone o repositório e instale as dependências:
+---
 
+## ⚙️ Rodando o projeto
+
+### 1. Clone o repositório e instale as dependências:
+
+```bash
 git clone https://github.com/eduardobotelho28/appointment-api
 cd appointment-api
 npm install
+```
 
-Configure as variáveis de ambiente criando um arquivo .env na raiz com:
+### 2. Configure as variáveis de ambiente
 
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+
+```
 PORT=3000
 JWT_SECRET=ChaveSuperSecreta
+```
 
-Execute as migrações do Prisma para criar o banco:
+### 3. Execute as migrações do Prisma para criar o banco
+
+```bash
 npx prisma migrate dev --name init
+```
 
-Rode a seed para criar o usuário admin:
+### 4. Rode a seed para criar o usuário admin
+
+```bash
 npx ts-node prisma/seed.ts
+```
 
-Inicie o servidor:
+### 5. Inicie o servidor
+
+```bash
 npm run dev
-Servidor rodando em http://localhost:3000.
+```
 
-Endpoints principais
+Servidor rodando em: [http://localhost:3000](http://localhost:3000)
 
-Usuários
-POST /users/register — Registrar usuário comum (não admin)
+---
 
-POST /users/login — Login e obtenção do token JWT
+## 🔗 Endpoints principais
 
-A partir daqui as rotas de usuário requerem autenticação e permissão de administrador:
+### 👤 Usuários
 
-GET /users — Listar todos os usuários (admin)
+- `POST /users/register` — Registrar usuário comum (não admin)  
+- `POST /users/login` — Login e obtenção do token JWT
 
-GET /users/:id — Obter usuário por ID (admin)
+**As rotas abaixo requerem autenticação e permissão de administrador:**
 
-PUT /users/:id — Atualizar usuário (admin)
+- `GET /users` — Listar todos os usuários (admin)  
+- `GET /users/:id` — Obter usuário por ID (admin)  
+- `PUT /users/:id` — Atualizar usuário (admin)  
+- `DELETE /users/:id` — Deletar usuário (admin)  
 
-DELETE /users/:id — Deletar usuário (admin)
+### 📆 Compromissos (Appointments)
 
-Compromissos (Appointments)
-Todas as rotas de compromissos requerem autenticação (qualquer usuário logado)
+**Todas as rotas requerem autenticação (qualquer usuário logado):**
 
-POST /appointments — Criar compromisso
+- `POST /appointments` — Criar compromisso  
+- `GET /appointments` — Listar compromissos do usuário logado  
+- `GET /appointments/:id` — Obter compromisso por ID (se for do usuário)  
+- `PUT /appointments/:id` — Atualizar compromisso (se for do usuário)  
+- `DELETE /appointments/:id` — Deletar compromisso (se for do usuário)  
 
-GET /appointments — Listar compromissos do usuário logado
+---
 
-GET /appointments/:id — Obter compromisso por ID (se for do usuário)
+## 🧪 Simulando o usuário admin
 
-PUT /appointments/:id — Atualizar compromisso (se for do usuário)
+Use o seguinte login criado pela seed:
 
-DELETE /appointments/:id — Deletar compromisso (se for do usuário)
+- **Email:** `admin@example.com`  
+- **Senha:** `admin123`
 
-Simulando o usuário admin
-Use o email admin@example.com e senha admin123 para o login do admin criado pela seed.
+Após login, copie o token JWT retornado e use nas requisições autenticadas:
 
-Após login, copie o token JWT retornado e utilize no header das requisições autenticadas:
+```
 Authorization: Bearer <token>
+```
 
-Scripts úteis
-npm run dev — inicia o servidor em modo desenvolvimento (com nodemon)
-npx prisma migrate dev --name <nome> — executa migração
-npx ts-node prisma/seed.ts — executa a seed para criar o admin
+---
+
+## 📜 Scripts úteis
+
+```bash
+npm run dev                     # Inicia o servidor em modo desenvolvimento (com nodemon)
+npx prisma migrate dev --name <nome>   # Executa uma nova migração
+npx ts-node prisma/seed.ts     # Executa a seed para criar o admin
+```
